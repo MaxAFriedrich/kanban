@@ -13,3 +13,37 @@ body{
 a{
   color: #99f;
 }
+
+input {
+  background-color: var(--bg1);
+  border: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background-color: var(--bg1);
+  color: inherit;
+  font: inherit;
+  border: none;
+  outline: none;
+  margin: 0.5rem;
+  height: 3rem;
+  width: 3rem;
+  font-size: 2rem;
+  padding:0.3rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+button svg {
+  width: 2rem;
+}
+
+pre {
+  width: 100%;
+  overflow: hidden;
+}
+
+

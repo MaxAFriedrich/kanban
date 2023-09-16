@@ -55,6 +55,7 @@ function make(text) {
   <div v-if="url != null" class="modal-shade"></div>
   <div v-if="url != null" class="modal">
     <div class="close">
+      <h2>Get Login Url</h2>
       <button @click="url = null">&cross;</button>
     </div>
     <div class="url">
@@ -68,25 +69,6 @@ function make(text) {
 </template>
 
 <style scoped>
-button {
-  outline: none;
-  border: none;
-  background: none;
-  color: inherit;
-  height: 2.5rem;
-  width: 2.5rem;
-  font-size: 2rem;
-  margin: 1rem;
-}
-
-button svg {
-  width: 2rem;
-}
-
-pre {
-  width: 100%;
-  overflow: hidden;
-}
 
 .modal {
   width: 50vw;
@@ -107,7 +89,7 @@ pre {
 
 .close {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 #qr {

@@ -66,23 +66,8 @@ getUrlCreds();
   margin: 0.5rem;
 }
 
-input {
-  background-color: var(--bg1);
-  border: none;
-  outline: none;
-  font: inherit;
-  color: inherit;
+button{
+  width:10ch;
 }
 
-button {
-  background-color: var(--bg1);
-  color: inherit;
-  font: inherit;
-  border: none;
-  outline: none;
-  margin: 1;
-  height: 3rem;
-  width: 10ch;
-  font-size: 2rem
-}
 </style>
