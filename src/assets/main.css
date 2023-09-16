@@ -1,6 +1,7 @@
 :root{
   --text: #ddd;
   --bg: #222;
+  --bg0: #1f1f1f;
   --bg1: #111;
 }
 body{
@@ -23,7 +24,7 @@ input {
 }
 
 button {
-  background-color: var(--bg1);
+  background: none;
   color: inherit;
   font: inherit;
   border: none;

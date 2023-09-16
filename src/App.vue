@@ -2,7 +2,8 @@
 import Login from './components/Login.vue'
 import UrlGen from './components/UrlGen.vue';
 import Refresh from './components/Refresh.vue';
-import { InternalState } from './state';
+import List from './components/List.vue';
+import { UserData,InternalState } from './state';
 </script>
 
 <template>
@@ -12,7 +13,15 @@ import { InternalState } from './state';
       <UrlGen />
       <Refresh />
     </div>
+    <div class="todo">
+      <List v-for="list in UserData.todo.value" :list="list" />
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.todo{
+  display: flex;
+  margin: 1rem;
+}
+</style>
