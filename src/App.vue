@@ -1,13 +1,16 @@
 <script setup>
-import Login  from './components/Login.vue'
+import Login from './components/Login.vue'
 import UrlGen from './components/UrlGen.vue';
-
+import { InternalState } from './state';
 </script>
 
 <template>
-  <Login />
-  <UrlGen />
+  <Login v-if="InternalState.key.value == null" />
+  <div v-if="InternalState.key.value != null">
+    <div class="toolbar">
+      <UrlGen />
+    </div>
+  </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

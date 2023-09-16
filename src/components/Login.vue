@@ -1,5 +1,4 @@
 <script setup>
-import Paste from "./icons/Paste.vue"
 import { InternalState } from "../state"
 
 function login() {
@@ -10,17 +9,19 @@ function login() {
 
 
 function getUrlCreds() {
-  const encodedCreds = window.location.hash.slice(1)[1];
+  const encodedCreds = window.location.hash.slice(1);
+  const b64 = atob(encodedCreds)
+  if (b64 < 5){
+    return
+  }
   try{
-  const params = JSON.parse(atob(encodedCreds))
+  const params = JSON.parse(b64)
   if (params.id && params.key && params.token) {
     InternalState.id.value = params.id
     InternalState.token.value = params.token
     InternalState.key.value = params.key
   }
-  }catch{
-
-  }
+  }catch (SyntaxError) {}
 }
 
 
@@ -33,17 +34,14 @@ getUrlCreds();
     <label for="key">Key: </label>
     <div class="item">
       <input type="password" id="key">
-      <Paste />
     </div>
     <label for="token">Github Token: </label>
     <div class="item">
       <input type="password" id="token">
-      <Paste />
     </div>
     <label for="id">Gist ID: </label>
     <div class="item">
       <input type="text" id="id">
-      <Paste />
     </div>
     <button @click="login">Login</button>
   </div>
