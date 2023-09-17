@@ -56,7 +56,8 @@ window.onkeyup = (e) => {
       break;
     case 'H':
       if (Selected.list.value > 0 && UserData.todo.value[Selected.list.value - 1].capacity >= UserData.todo.value[Selected.list.value - 1].items.length + 1) {
-        const tmp = UserData.todo.value[Selected.list.value].items.pop(Selected.item.value)
+        const tmp = UserData.todo.value[Selected.list.value].items[Selected.item.value]
+        UserData.todo.value[Selected.list.value].items.splice(Selected.item.value,1)
         UserData.todo.value[Selected.list.value - 1].items.push(tmp)
         Selected.list.value -= 1
         Selected.maxItem.value = UserData.todo.value[Selected.list.value].items.length - 1
@@ -66,7 +67,8 @@ window.onkeyup = (e) => {
       break;
     case 'L':
       if (Selected.list.value < UserData.todo.value.length - 1 && UserData.todo.value[Selected.list.value + 1].capacity >= UserData.todo.value[Selected.list.value + 1].items.length + 1) {
-        const tmp = UserData.todo.value[Selected.list.value].items.pop(Selected.item.value)
+        const tmp = UserData.todo.value[Selected.list.value].items[Selected.item.value]
+        UserData.todo.value[Selected.list.value].items.splice(Selected.item.value,1)
         UserData.todo.value[Selected.list.value + 1].items.push(tmp)
         Selected.list.value += 1
         Selected.maxItem.value = UserData.todo.value[Selected.list.value].items.length - 1
