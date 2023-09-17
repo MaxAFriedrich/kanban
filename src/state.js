@@ -33,20 +33,22 @@ export let UserData = {
       capacity: 2,
       items: ref([])
     },
-    // {
-    //   name: "Task 1",
-    //   capacity: 5,
-    //   addable: true,
-    //   tuckable: true,
-    //   items: ref([])
-    // },
-    // {
-    //   name: "Task 2",
-    //   capacity: 5,
-    //   addable: true,
-    //   tuckable: true,
-    //   items: ref([])
-    // },
+    {
+      name: "Task 1",
+      capacity: 5,
+      addable: true,
+      tuckable: true,
+      dumpable: true,
+      items: ref([])
+    },
+    {
+      name: "Task 2",
+      capacity: 5,
+      addable: true,
+      tuckable: true,
+      dumpable: true,
+      items: ref([])
+    },
     {
       name: "Complete",
       capacity: 5,
