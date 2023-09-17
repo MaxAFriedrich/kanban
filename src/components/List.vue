@@ -1,6 +1,20 @@
 <script setup>
+import { ref } from "vue"
 import Item from "./Item.vue"
 const p = defineProps(["list"]);
+function addItem() {
+  if (p.list.capacity <= p.list.items.length) {
+    return
+  }
+  const item = {
+    name: "New",
+    due: "",
+    description: "",
+    tags: ref([])
+  }
+  item.new = true
+  p.list.items.push(item)
+}
 </script>
 
 <template>
@@ -8,7 +22,7 @@ const p = defineProps(["list"]);
     <div class="name">{{ p.list.name }}</div>
     <hr>
     <div class="items">
-      <Item v-for="item in p.list.items" :item="item" />
+      <Item v-for="(item, index) in p.list.items" :index="index" :item="item" :list="p.list"/>
     </div>
     <hr>
     <button v-if="p.list.addable" class="add" @click="addItem">&plus;</button>
@@ -41,7 +55,7 @@ const p = defineProps(["list"]);
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
-  width:100%;
+  width: 100%;
 }
 
 hr {

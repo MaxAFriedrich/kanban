@@ -1,14 +1,89 @@
 <script setup>
+import { onMounted, ref } from "vue"
+
+import { Upload } from "../state"
+
 import Edit from "./icons/Edit.vue"
+import Remove from "./icons/Remove.vue"
+import UploadIcon from "./icons/Upload.vue"
+
 import Tag from "./Tag.vue"
-const p = defineProps(["item"])
+
+const p = defineProps(["item", "index", "list"])
+const showModal = ref(false)
+
+function removeTag(index) {
+  p.item.tags.pop(index)
+}
+
+function addTag() {
+  p.item.tags.push({ color: "#005500", name: "New" })
+}
+
+function upload(){
+Upload();
+  showModal.value=false
+  if (p.item.new !=undefined){
+    delete p.item.new
+  }
+}
+
+function close(){
+  showModal.value=false
+  if (p.item.new !=undefined){
+    p.list.items.pop(p.index)
+  }
+}
+
+onMounted(() => {
+  if (p.item.new !=undefined){
+    showModal.value = true
+  }
+})
 </script>
 
 <template>
+  <div class="modal-shade" v-if="showModal"></div>
+  <div class="modal" v-if="showModal">
+    <div class="close">
+      <h2 class="title">Edit: <input class="inherited" v-model="p.item.name"></h2>
+      <button class="modalButton" @click="close">&cross;</button>
+    </div>
+    <div class="modalItem">
+      <label for="desc">Description:</label>
+      <textarea id="desc" v-model="p.item.description"></textarea>
+    </div>
+    <div class="modalItem">
+      <label for="date">Due Date:</label>
+      <input type="date" v-model="p.item.due">
+    </div>
+    <div class="modalItem">
+      <label>Tags</label>
+      <div class="tagEdit">
+        <div class="tagItem" v-for="(tag, index) in p.item.tags">
+          <input v-model="tag.name">
+          <input v-model="tag.color" type="color">
+          <button class="modalButton" @click="removeTag(index)">
+            <Remove />
+          </button>
+        </div>
+      </div>
+      <div class="close">
+        <div></div>
+        <button class="modalButton" @click="addTag">&plus;</button>
+      </div>
+    </div>
+    <div class="close">
+      <div></div>
+      <button class="modalButton" @click="upload">
+        <UploadIcon />
+      </button>
+    </div>
+  </div>
   <div class="item">
     <div class="row">
       <div class="name">{{ p.item.name }}</div>
-      <button class="edit">
+      <button class="edit" @click="showModal = true">
         <Edit />
       </button>
     </div>
@@ -43,7 +118,8 @@ button svg {
   justify-content: flex-start;
   width: calc(100% - 1rem);
   background-color: var(--bg1);
-  padding:0.5rem;
+  padding: 0.5rem;
+  margin: 0.3rem 0;
 }
 
 .row {
@@ -57,6 +133,57 @@ button svg {
 
 .tags {
   display: flex;
+}
 
+.date {
+  color: var(--text0);
+}
+
+.modalButton {
+  margin: 0.5rem;
+  height: 3rem;
+  width: 3rem;
+  font-size: 2rem;
+  padding: 0.3rem;
+}
+
+.modalButton svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.title {
+  width: 75%;
+  overflow: hidden;
+}
+
+.inherited {
+  background-color: inherit;
+  display: inline;
+  width: calc(100% - 7ch);
+}
+
+.modalItem {
+  margin: 0.5rem 0;
+}
+
+.tagEdit {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.tagItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg1);
+  margin: 0.5rem;
+  height: 2rem;
+}
+
+.tagItem input {
+  background: none;
 }
 </style>

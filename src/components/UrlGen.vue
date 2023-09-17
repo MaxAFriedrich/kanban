@@ -70,15 +70,6 @@ function make(text) {
 
 <style scoped>
 
-.modal {
-  width: 50vw;
-  position: absolute;
-  top: 4rem;
-  left: 20vw;
-  background-color: var(--bg1);
-  padding: 1rem;
-}
-
 .url {
   display: flex;
   flex-direction: row;
@@ -87,22 +78,9 @@ function make(text) {
   justify-content: flex-start;
 }
 
-.close {
-  display: flex;
-  justify-content: space-between;
-}
-
 #qr {
   width: fit-content;
   margin: auto;
 }
 
-.modal-shade {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: #55555555;
-}
 </style>

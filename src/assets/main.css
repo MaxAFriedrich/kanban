@@ -1,8 +1,11 @@
 :root{
   --text: #ddd;
+  --text0: #bbb;
   --bg: #222;
   --bg0: #1f1f1f;
   --bg1: #111;
+  --warn: #d44;
+  --highlight:#99d;
 }
 body{
   color: var(--text);
@@ -12,15 +15,27 @@ body{
 }
 
 a{
-  color: #99f;
+  color: var(--highlight);
 }
 
-input {
+input,textarea {
   background-color: var(--bg1);
   border: none;
   outline: none;
   font: inherit;
   color: inherit;
+}
+
+textarea{
+  resize: none;
+  width:100%;
+  height:15ex;
+  margin-top:0.5rem;
+}
+
+label{
+  font-weight: 600;
+  padding-right:2ch;
 }
 
 button {
@@ -47,4 +62,23 @@ pre {
   overflow: hidden;
 }
 
-
+.modal {
+  width: 50vw;
+  position: absolute;
+  top: 4rem;
+  left: 20vw;
+  background-color: var(--bg);
+  padding: 1rem;
+}
+.modal-shade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #55555555;
+}
+.close {
+  display: flex;
+  justify-content: space-between;
+}

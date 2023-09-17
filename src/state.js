@@ -7,23 +7,26 @@ export const InternalState = {
   key: ref(null),
 }
 
+// TAG = { color: "#005500", name: "New" }
+// ITEM = {
+//   name: "New",
+//   due: "",
+//   description: "",
+//   tags: ref([])
+// }
+
 export let UserData = {
   todo: ref([
     {
       name: "foo",
       capacity: 5,
       addable: true,
-      items: ref([
-        {
-          name: "first item",
-          due: "some date",
-          description: "This is the description field",
-          tags: ref([{
-            color: "red",
-            name: "hello"
-          }])
-        }
-      ])
+      items: ref([{
+        name: "New List Item",
+        due: "",
+        description: "",
+        tags: ref([])
+      }])
     }
   ])
 }
