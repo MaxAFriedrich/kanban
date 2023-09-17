@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue"
 
-import { Upload } from "../state"
+import { Upload, Selected } from "../state"
 
 import Edit from "./icons/Edit.vue"
 import Remove from "./icons/Remove.vue"
@@ -9,7 +9,7 @@ import UploadIcon from "./icons/Upload.vue"
 
 import Tag from "./Tag.vue"
 
-const p = defineProps(["item", "index", "list"])
+const p = defineProps(["item", "index", "list", "listIndex"])
 const showModal = ref(false)
 
 function removeTag(index) {
@@ -95,7 +95,7 @@ onMounted(() => {
       </button>
     </div>
   </div>
-  <div class="item">
+  <div class="item" :class="{'selected':Selected.item.value==p.index && Selected.list.value == p.listIndex}">
     <div class="row">
       <div class="name">{{ p.item.name }}</div>
       <button class="edit" @click="showModal = true">
@@ -208,5 +208,9 @@ button svg {
 
 .tagItem input {
   background: none;
+}
+
+.selected{
+  background-color: var(--hl-dark) !important;
 }
 </style>

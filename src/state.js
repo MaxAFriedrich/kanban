@@ -1,6 +1,12 @@
 import { ref } from "vue"
 import { UpdateGist, GetGist } from "./github"
 
+export const Selected = {
+  item:ref(0),
+  list:ref(-1),
+  maxItem:ref(0),
+}
+
 export const InternalState = {
   id: ref(null),
   token: ref(null),

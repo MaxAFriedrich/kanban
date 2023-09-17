@@ -6,7 +6,8 @@
   --bg1: #111;
   --warn: #ebcb8b;
   --fail: #d08770;
-  --highlight:#81a1c1;
+  --highlight:#4c566a;
+  --hl-dark: #3b4252;
 }
 body{
   color: var(--text);
@@ -83,3 +84,4 @@ pre {
   display: flex;
   justify-content: space-between;
 }
+

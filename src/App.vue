@@ -4,9 +4,72 @@ import Login from './components/Login.vue'
 import UrlGen from './components/UrlGen.vue';
 import Refresh from "./components/icons/Refresh.vue"
 import List from './components/List.vue';
-import { Download, UserData, InternalState } from './state';
+import { Selected, Download, UserData, InternalState } from './state';
 let refresh = ref(0);
 function getUpdate() { Download(refresh) }
+
+window.onkeyup = (e) => {
+  switch (e.key) {
+    case 'Escape':
+      Selected.item.value = 0
+      Selected.list.value = -1
+      break;
+    case 'h':
+      if (Selected.list.value > 0) {
+        Selected.list.value -= 1
+      }
+      break;
+    case 'l':
+      if (Selected.list.value < UserData.todo.value.length - 1) {
+        Selected.list.value += 1
+      }
+      break;
+    case 'j':
+      if (Selected.item.value < Selected.maxItem.value)
+        Selected.item.value += 1
+      break;
+    case 'k':
+      if (Selected.item.value > 0)
+        Selected.item.value -= 1
+      break;
+    case 'J':
+      if (Selected.item.value < Selected.maxItem.value) {
+        const items = UserData.todo.value[Selected.list.value].items
+        const tmp = items[Selected.item.value + 1]
+        items[Selected.item.value + 1] = items[Selected.item.value]
+        items[Selected.item.value] = tmp
+        Selected.item.value += 1
+      }
+      break;
+    case 'K':
+      if (Selected.item.value > 0) {
+        const items = UserData.todo.value[Selected.list.value].items
+        const tmp = items[Selected.item.value - 1]
+        items[Selected.item.value - 1] = items[Selected.item.value]
+        items[Selected.item.value] = tmp
+        Selected.item.value -= 1
+      }
+      break;
+    case 'H':
+      if (Selected.list.value > 0 && UserData.todo.value[Selected.list.value - 1].capacity >= UserData.todo.value[Selected.list.value - 1].items.length+1) {
+        const tmp = UserData.todo.value[Selected.list.value].items.pop(Selected.item.value)
+        UserData.todo.value[Selected.list.value - 1].items.push(tmp)
+        Selected.list.value -= 1
+        Selected.maxItem.value = UserData.todo.value[Selected.list.value].items.length - 1
+        Selected.item.value = Selected.maxItem.value
+      }
+      break;
+    case 'L':
+      if (Selected.list.value < UserData.todo.value.length - 1 && UserData.todo.value[Selected.list.value + 1].capacity >= UserData.todo.value[Selected.list.value + 1].items.length+1) {
+        const tmp = UserData.todo.value[Selected.list.value].items.pop(Selected.item.value)
+        UserData.todo.value[Selected.list.value + 1].items.push(tmp)
+        Selected.list.value += 1
+        Selected.maxItem.value = UserData.todo.value[Selected.list.value].items.length - 1
+        Selected.item.value = Selected.maxItem.value
+      }
+      break;
+  }
+}
 </script>
 
 <template>
@@ -19,7 +82,7 @@ function getUpdate() { Download(refresh) }
       </button>
     </div>
     <div class="todo" :key="refresh">
-      <List v-for="list in UserData.todo.value" :list="list" />
+      <List v-for="(list, index) in UserData.todo.value" :list="list" :index="index" />
     </div>
   </div>
 </template>
