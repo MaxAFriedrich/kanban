@@ -10,6 +10,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vitejs/plugin-legacy": "^4.1.1",
     "crypto-js": "^4.1.1",
     "vue": "^3.3.4"
   },
