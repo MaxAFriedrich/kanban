@@ -1,9 +1,12 @@
 <script setup>
+import { ref } from "vue"
 import Login from './components/Login.vue'
 import UrlGen from './components/UrlGen.vue';
-import Refresh from './components/Refresh.vue';
+import Refresh from "./components/icons/Refresh.vue"
 import List from './components/List.vue';
-import { UserData,InternalState } from './state';
+import { Download, UserData, InternalState } from './state';
+let refresh = ref(0);
+function getUpdate() { Download(refresh) }
 </script>
 
 <template>
@@ -11,16 +14,18 @@ import { UserData,InternalState } from './state';
   <div v-if="InternalState.key.value != null">
     <div class="toolbar">
       <UrlGen />
-      <Refresh />
+      <button @click="getUpdate">
+        <Refresh />
+      </button>
     </div>
-    <div class="todo">
-      <List v-for="list in UserData.todo.value" :list="list" />
+    <div class="todo" :key="refresh">
+      <List v-for="list in UserData.todo.value == undefined ? UserData.todo._value : UserData.todo.value" :list="list" />
     </div>
   </div>
 </template>
 
 <style scoped>
-.todo{
+.todo {
   display: flex;
   margin: 1rem;
 }

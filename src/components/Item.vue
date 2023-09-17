@@ -20,23 +20,23 @@ function addTag() {
   p.item.tags.push({ color: "#005500", name: "New" })
 }
 
-function upload(){
-Upload();
-  showModal.value=false
-  if (p.item.new !=undefined){
+function upload() {
+  showModal.value = false
+  if (p.item.new != undefined) {
     delete p.item.new
   }
+  Upload();
 }
 
-function close(){
-  showModal.value=false
-  if (p.item.new !=undefined){
+function close() {
+  showModal.value = false
+  if (p.item.new != undefined) {
     p.list.items.pop(p.index)
   }
 }
 
 onMounted(() => {
-  if (p.item.new !=undefined){
+  if (p.item.new != undefined) {
     showModal.value = true
   }
 })
