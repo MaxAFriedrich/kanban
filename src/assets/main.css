@@ -4,8 +4,9 @@
   --bg: #222;
   --bg0: #1f1f1f;
   --bg1: #111;
-  --warn: #d44;
-  --highlight:#99d;
+  --warn: #ebcb8b;
+  --fail: #d08770;
+  --highlight:#81a1c1;
 }
 body{
   color: var(--text);

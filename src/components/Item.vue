@@ -35,6 +35,21 @@ function close() {
   }
 }
 
+function isPast(date) {
+  if (date == "") return false;
+  const currentDate = new Date();
+  const targetDate = new Date(date);
+  return targetDate < currentDate;
+}
+function isNext3Days(date) {
+  if (date == "") return false;
+  const currentDate = new Date();
+  const targetDate = new Date(date);
+  const threeDaysLater = new Date();
+  threeDaysLater.setDate(currentDate.getDate() + 3);
+  return targetDate >= currentDate && targetDate <= threeDaysLater;
+}
+
 onMounted(() => {
   if (p.item.new != undefined) {
     showModal.value = true
@@ -88,7 +103,7 @@ onMounted(() => {
       </button>
     </div>
     <div class="row">
-      <div class="date">{{ p.item.due }}</div>
+      <div class="date" :class="{ 'red': isPast(p.item.due), 'orange': isNext3Days(p.item.due) }">{{ p.item.due }}</div>
       <div class="tags">
         <Tag v-for="tag in p.item.tags" :tag="tag" />
       </div>
@@ -137,6 +152,14 @@ button svg {
 
 .date {
   color: var(--text0);
+}
+
+.red {
+  color: var(--fail);
+}
+
+.orange {
+  color: var(--warn);
 }
 
 .modalButton {
