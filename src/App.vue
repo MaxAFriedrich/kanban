@@ -19,7 +19,7 @@ function getUpdate() { Download(refresh) }
       </button>
     </div>
     <div class="todo" :key="refresh">
-      <List v-for="list in UserData.todo.value == undefined ? UserData.todo._value : UserData.todo.value" :list="list" />
+      <List v-for="list in UserData.todo.value" :list="list" />
     </div>
   </div>
 </template>

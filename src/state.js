@@ -40,12 +40,14 @@ export function Upload() {
     });
 }
 
+
+
 export function Download(refresh) {
   GetGist(InternalState.id.value, InternalState.token.value, InternalState.key.value)
     .then(decodedContent => {
       if (decodedContent) {
         UserData = decodedContent
-  refresh.value +=1
+        refresh.value +=1
         console.log("Rerendered")
       } else {
         console.error('Failed to fetch or decode gist data.');

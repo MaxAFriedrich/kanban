@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import Item from "./Item.vue"
 const p = defineProps(["list"]);
+
 function addItem() {
   if (p.list.capacity <= p.list.items.length) {
     return
@@ -14,6 +15,7 @@ function addItem() {
   }
   item.new = true
   p.list.items.push(item)
+  console.log(p.list)
 }
 </script>
 

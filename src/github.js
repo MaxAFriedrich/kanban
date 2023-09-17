@@ -1,3 +1,4 @@
+import {ref} from "vue"
 import CryptoJS from "crypto-js"
 
 export async function GetGist(gistId, token,key) {
@@ -21,7 +22,8 @@ export async function GetGist(gistId, token,key) {
         const fileKey = Object.keys(data.files)[0];
         const content = data.files[fileKey].content;
 
-        return decrypt(content,key);
+        const out = decrypt(content,key);
+        return out
       } else {
         console.log('Gist data does not contain content.');
         return null;
@@ -32,19 +34,6 @@ export async function GetGist(gistId, token,key) {
       return null;
     });
 }
-
-// // Replace '<YOUR-TOKEN>' and '<GIST_ID>' with your actual token and gist ID
-// const yourToken = '<YOUR-TOKEN>';
-// const gistId = '<GIST_ID>';
-
-// getGist(gistId, yourToken)
-//   .then(decodedContent => {
-//     if (decodedContent) {
-//       console.log('Decoded Gist Content:', decodedContent);
-//     } else {
-//       console.log('Failed to fetch or decode gist data.');
-//     }
-//   });
 
 export async function UpdateGist(gistId, token, fileContent,key) {
   const url = `https://api.github.com/gists/${gistId}`;
@@ -78,27 +67,24 @@ export async function UpdateGist(gistId, token, fileContent,key) {
     });
 }
 
-// // Replace '<YOUR-TOKEN>', '<GIST_ID>', '<fileName>', and '<fileContent>'
-// const yourToken = '<YOUR-TOKEN>';
-// const gistId = '<GIST_ID>';
-// const fileContent = 'Hello World from GitHub'; // Replace with the actual file content
-
-// updateGistFile(gistId, yourToken, fileContent)
-//   .then(updatedGist => {
-//     if (updatedGist) {
-//       console.log('Updated Gist:', updatedGist);
-//     } else {
-//       console.log('Failed to update gist.');
-//     }
-//   });
-
 
 function encrypt(data, key) {
-  return CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
+  let out = JSON.stringify(data)
+  return CryptoJS.AES.encrypt(out, key).toString();
 }
 
 
 function decrypt(ciphertext, key) {
   var bytes = CryptoJS.AES.decrypt(ciphertext, key);
-  return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  return deserializeObject(bytes.toString(CryptoJS.enc.Utf8))
+}
+
+// Function to deserialize an object with Vue refs
+function deserializeObject(json) {
+  return JSON.parse(json, (key, value) => {
+    if (typeof value === 'object' && value !== null && '__v_isRef' in value) {
+      return ref(value._value)
+    }
+    return value;
+  });
 }
