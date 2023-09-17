@@ -30,7 +30,7 @@ function clearItem(){
 
 <template>
   <div class="list">
-    <div class="top">
+    <div class="top" :class="{'space':p.list.dumpable === true}">
       <div class="name">{{ p.list.name }}</div><button class="icon" v-if="p.list.dumpable === true" @click="clearItem">
         <DumpAll />
       </button>
@@ -61,8 +61,14 @@ function clearItem(){
 .top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content:center;
   flex-wrap: nowrap;
+  width: 100%;
+}
+
+.space{
+  width:85%;
+  justify-content: space-between;
 }
 
 .name {
