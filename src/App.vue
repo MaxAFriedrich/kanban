@@ -4,11 +4,13 @@ import Login from './components/Login.vue'
 import UrlGen from './components/UrlGen.vue';
 import Refresh from "./components/icons/Refresh.vue"
 import List from './components/List.vue';
-import { Selected, Download, UserData, InternalState } from './state';
-let refresh = ref(0);
-function getUpdate() { Download(refresh) }
+import {refresh, Selected, Download, Upload, UserData, InternalState } from './state';
+function getUpdate() { Download() }
+
+let runUpdate = null
 
 window.onkeyup = (e) => {
+  let needsUpdate = false
   switch (e.key) {
     case 'Escape':
       Selected.item.value = 0
@@ -39,6 +41,7 @@ window.onkeyup = (e) => {
         items[Selected.item.value + 1] = items[Selected.item.value]
         items[Selected.item.value] = tmp
         Selected.item.value += 1
+        needsUpdate = true
       }
       break;
     case 'K':
@@ -48,32 +51,41 @@ window.onkeyup = (e) => {
         items[Selected.item.value - 1] = items[Selected.item.value]
         items[Selected.item.value] = tmp
         Selected.item.value -= 1
+        needsUpdate = true
       }
       break;
     case 'H':
-      if (Selected.list.value > 0 && UserData.todo.value[Selected.list.value - 1].capacity >= UserData.todo.value[Selected.list.value - 1].items.length+1) {
+      if (Selected.list.value > 0 && UserData.todo.value[Selected.list.value - 1].capacity >= UserData.todo.value[Selected.list.value - 1].items.length + 1) {
         const tmp = UserData.todo.value[Selected.list.value].items.pop(Selected.item.value)
         UserData.todo.value[Selected.list.value - 1].items.push(tmp)
         Selected.list.value -= 1
         Selected.maxItem.value = UserData.todo.value[Selected.list.value].items.length - 1
         Selected.item.value = Selected.maxItem.value
+        needsUpdate = true
       }
       break;
     case 'L':
-      if (Selected.list.value < UserData.todo.value.length - 1 && UserData.todo.value[Selected.list.value + 1].capacity >= UserData.todo.value[Selected.list.value + 1].items.length+1) {
+      if (Selected.list.value < UserData.todo.value.length - 1 && UserData.todo.value[Selected.list.value + 1].capacity >= UserData.todo.value[Selected.list.value + 1].items.length + 1) {
         const tmp = UserData.todo.value[Selected.list.value].items.pop(Selected.item.value)
         UserData.todo.value[Selected.list.value + 1].items.push(tmp)
         Selected.list.value += 1
         Selected.maxItem.value = UserData.todo.value[Selected.list.value].items.length - 1
         Selected.item.value = Selected.maxItem.value
+        needsUpdate = true
       }
       break;
+  }
+
+  if (needsUpdate) {
+    if (runUpdate != null)
+      clearTimeout(runUpdate)
+    runUpdate = setTimeout(Upload, 5000)
   }
 }
 </script>
 
 <template>
-  <Login v-if="InternalState.key.value == null" />
+  <Login v-if="InternalState.key.value == null"/>
   <div v-if="InternalState.key.value != null">
     <div class="toolbar">
       <UrlGen />

@@ -1,27 +1,29 @@
 <script setup>
-import { InternalState } from "../state"
+import { Download, InternalState } from "../state"
 
 function login() {
   InternalState.id.value = document.getElementById("id").value
   InternalState.token.value = document.getElementById("token").value
   InternalState.key.value = document.getElementById("key").value
+  Download()
 }
 
 
 function getUrlCreds() {
   const encodedCreds = window.location.hash.slice(1);
   const b64 = atob(encodedCreds)
-  if (b64 < 5){
+  if (b64 < 5) {
     return
   }
-  try{
-  const params = JSON.parse(b64)
-  if (params.id && params.key && params.token) {
-    InternalState.id.value = params.id
-    InternalState.token.value = params.token
-    InternalState.key.value = params.key
-  }
-  }catch (SyntaxError) {}
+  try {
+    const params = JSON.parse(b64)
+    if (params.id && params.key && params.token) {
+      InternalState.id.value = params.id
+      InternalState.token.value = params.token
+      InternalState.key.value = params.key
+      Download()
+    }
+  } catch (SyntaxError) { }
 }
 
 
@@ -66,8 +68,7 @@ getUrlCreds();
   margin: 0.5rem;
 }
 
-button{
-  width:10ch;
+button {
+  width: 10ch;
 }
-
 </style>

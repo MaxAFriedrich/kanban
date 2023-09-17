@@ -1,6 +1,8 @@
 import { ref } from "vue"
 import { UpdateGist, GetGist } from "./github"
 
+export const refresh = ref(0)
+
 export const Selected = {
   item:ref(0),
   list:ref(-1),
@@ -71,7 +73,7 @@ export function Upload() {
 
 
 
-export function Download(refresh) {
+export function Download() {
   GetGist(InternalState.id.value, InternalState.token.value, InternalState.key.value)
     .then(decodedContent => {
       if (decodedContent) {
